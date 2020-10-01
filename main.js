@@ -1,26 +1,10 @@
-function loadShader(url) {
-	return fetch(url).then(res => res.text());
-}
+const gl = canvas.getContext('webgl');
 
-const vertexShader = loadShader('./shaders/vertex-shader.glsl');
-const fragmentShader = loadShader('./shaders/fragment-shader.glsl');
+async function main() {
+	const vertexShader = await loadShader('./shaders/vertex-shader.glsl');
+	const fragmentShader = await loadShader('./shaders/fragment-shader.glsl');
 
-async function compile() {
-	const gl = canvas.getContext('webgl');
-
-	const vs = gl.createShader(gl.VERTEX_SHADER);
-	gl.shaderSource(vs, await vertexShader);
-	gl.compileShader(vs);
-
-	const fs = gl.createShader(gl.FRAGMENT_SHADER);
-	gl.shaderSource(fs, await fragmentShader);
-	gl.compileShader(fs);
-
-	const program = gl.createProgram();
-	gl.attachShader(program, vs);
-	gl.attachShader(program, fs);
-	gl.linkProgram(program);
-	gl.useProgram(program);
+	const program = await compile(gl, vertexShader, fragmentShader);
 
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -29,4 +13,4 @@ async function compile() {
 	gl.drawArrays(gl.POINTS, 0, 1);
 }
 
-compile();
+main();
