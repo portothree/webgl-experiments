@@ -9,14 +9,20 @@ async function main() {
 	const size = gl.getAttribLocation(program, 'size');
 	const color = gl.getUniformLocation(program, 'color');
 
-	gl.vertexAttrib4f(position, 0, 0, 0, 1);
-	gl.vertexAttrib1f(size, 10);
-	gl.uniform4f(color, 1, 0, 0, 1);
-
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
 	gl.clear(gl.COLOR_BUFFER_BIT);
-	gl.drawArrays(gl.POINTS, 0, 1);
+
+	setInterval(() => {
+		const x = Math.random() * 2 - 1;
+		const y = Math.random() * 2 - 1;
+
+		gl.vertexAttrib4f(position, x, y, 0, 1);
+		gl.vertexAttrib1f(size, 10);
+		gl.uniform4f(color, 1, 0, 0, 1);
+
+		gl.drawArrays(gl.POINTS, 0, 1);
+	}, 500);
 }
 
 main();
