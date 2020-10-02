@@ -1,5 +1,5 @@
 async function main() {
-	const gl = canvas.getContext('webgl');
+	const gl = canvas.getContext('webgl', { preserveDrawingBuffer: true });
 	const vertexShader = await loadShader('./shaders/vertex-shader.glsl');
 	const fragmentShader = await loadShader('./shaders/fragment-shader.glsl');
 
@@ -11,9 +11,9 @@ async function main() {
 
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
-	gl.clear(gl.COLOR_BUFFER_BIT);
-
 	setInterval(() => {
+		gl.clear(gl.COLOR_BUFFER_BIT);
+
 		const x = Math.random() * 2 - 1;
 		const y = Math.random() * 2 - 1;
 
