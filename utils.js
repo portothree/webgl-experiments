@@ -19,3 +19,13 @@ async function compile(gl, vertexShader, fragmentShader) {
 
 	return program;
 }
+
+function buffer(gl, data, program, attribute, size, type) {
+	const buffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+	gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+
+	const attributeLocation = gl.getAttribLocation(program, attribute);
+	gl.vertexAttribPointer(attributeLocation, size, type, false, 0, 0);
+	gl.enableVertexAttribArray(attributeLocation);
+}
