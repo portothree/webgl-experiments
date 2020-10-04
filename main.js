@@ -5,24 +5,17 @@ async function main() {
 
 	const program = await compile(gl, vertexShader, fragmentShader);
 
-	const position = gl.getAttribLocation(program, 'position');
-	const size = gl.getAttribLocation(program, 'size');
 	const color = gl.getUniformLocation(program, 'color');
+	gl.uniform4f(color, 1, 0, 0, 1);
+
+	const vertices = new Float32Array([0, 0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0]);
+	// Bind a data buffer to the position attribute, fill it with the vertices and enable it
+	buffer(gl, vertices, program, 'position', 3, gl.FLOAT);
 
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
+	gl.clear(gl.COLOR_BUFFER_BIT);
 
-	setInterval(() => {
-		gl.clear(gl.COLOR_BUFFER_BIT);
-
-		const x = Math.random() * 2 - 1;
-		const y = Math.random() * 2 - 1;
-
-		gl.vertexAttrib4f(position, x, y, 0, 1);
-		gl.vertexAttrib1f(size, 10);
-		gl.uniform4f(color, 1, 0, 0, 1);
-
-		gl.drawArrays(gl.POINTS, 0, 1);
-	}, 500);
+	gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
 
 main();
